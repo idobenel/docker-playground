@@ -21,11 +21,11 @@ pipeline {
             }
         }
 
-        stage('Validation') {
-            steps {
-                sh 'curl -f --retry 10 --retry-delay 3 http://host.docker.internal:8082/health'
-            }
-        }
+	stage('Validation') {
+	    steps {
+		sh 'curl -f --retry 10 --retry-connrefused --retry-delay 3 http://host.docker.internal:8082/health'
+	    }
+	}
     }
     post {
     always {
