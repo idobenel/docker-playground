@@ -8,6 +8,12 @@ pipeline {
                 sh 'docker build -t devops-assignment .'
             }
         }
+        
+        stage('Cleanup old deployment') {
+	    steps {
+		sh 'docker compose down || true'
+	    }
+	}
 
         stage('Deploy') {
             steps {
