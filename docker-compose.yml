@@ -8,6 +8,11 @@ services:
       NODE_ENV: production
     depends_on:
       - mongodb
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8080/health"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mongodb:
     image: mongo:latest
