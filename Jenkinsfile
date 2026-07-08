@@ -5,18 +5,18 @@ pipeline {
 
         stage('Build Docker Image') {
             steps {
-                echo "Description: Starting to build the Docker image from the local Dockerfile ==="
+                echo "=== Starting to build the Docker image from the local Dockerfile ==="
                 sh 'docker build -t devops-assignment .'
             }
             post {
-                success { echo "SUCCESS: Docker image 'devops-assignment' built successfully!" }
-                failure { echo "FAILURE: Failed to build Docker image. Check Dockerfile or context." }
+                success { echo "SUCCESS: Docker image built successfully!" }
+                failure { echo "FAILURE: Failed to build Docker image." }
             }
         }
         
         stage('Cleanup old deployment') {
             steps {
-                echo "Description: Making sure no previous containers are running on the system ==="
+                echo "=== Making sure no previous containers are running on the system ==="
                 sh 'docker compose down || true'
             }
             post {
@@ -41,7 +41,7 @@ pipeline {
                 sh 'curl -f --retry 10 --retry-connrefused --retry-delay 3 http://host.docker.internal:8082/health'
             }
             post {
-                success { echo "SUCCESS: Health check passed! The application is healthy and responding." }
+                success { echo "SUCCESS: Health check passed. The application is healthy and responding." }
                 failure { echo "FAILURE: Health check failed. The application did not respond correctly within the time limit." }
             }
         }
@@ -56,7 +56,7 @@ pipeline {
             '''
         }
         success {
-            echo "PIPELINE SUCCESS: All stages completed successfully! Code is solid."
+            echo "PIPELINE SUCCESS: All stages completed successfully!."
         }
         failure {
             echo "PIPELINE FAILURE: Something went wrong during the execution. Please review the logs above."
